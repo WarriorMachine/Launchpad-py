@@ -201,10 +201,14 @@ while 1:
             lp.LedCtrlPulseXYByCode( 0 ,8 ,random.randint(1, 60))
             lp.LedCtrlPulseXYByCode( 1 ,8 ,random.randint(1, 60))
             #Case animation 2
-            lp.LedCtrlRaw( 41 ,3 ,3 ,3)
-            lp.LedCtrlRaw( 51 ,3 ,3 ,3)
-            lp.LedCtrlRaw( 42 ,3 ,3 ,3)
-            lp.LedCtrlRaw( 52 ,3 ,3 ,3)
+            lp.LedCtrlXYByCode( 0, 5, random.randint(0, 127) )
+            lp.LedCtrlFlashXYByCode( 0, 5, random.randint(0, 127) )
+            lp.LedCtrlXYByCode( 0, 4, random.randint(0, 127) )
+            lp.LedCtrlFlashXYByCode( 0, 4, random.randint(0, 127) )
+            lp.LedCtrlXYByCode( 1, 5, random.randint(0, 127) )
+            lp.LedCtrlFlashXYByCode( 1, 5, random.randint(0, 127) )
+            lp.LedCtrlXYByCode( 1, 4, random.randint(0, 127) )
+            lp.LedCtrlFlashXYByCode( 1, 4, random.randint(0, 127) )
             #Case animation 3
             lp.LedCtrlRaw( 71 ,3 ,3 ,3)
             lp.LedCtrlRaw( 81 ,3 ,3 ,3)
@@ -2565,7 +2569,46 @@ while 1:
                             reset()
                             caseAnime()
                             break
-    
+
+            def animeMulticolor():
+                lp.ButtonFlush()
+                flushAnime = 1
+                while 1:
+                    for x in range(4):
+                        for y in range(8):
+                            lp.LedCtrlXYByCode( 7-x, 8-y, random.randint(1, 127) )
+                            lp.LedCtrlFlashXYByCode( 7-x, 8-y, random.randint(1, 127) )
+                            lp.LedCtrlXYByCode( x, y+1, random.randint(1, 127) )
+                            lp.LedCtrlFlashXYByCode( x, y+1, random.randint(1, 127) )
+                            time.sleep(0.15)
+                    but = lp.ButtonStateRaw()
+                    if but != []:
+                        if but == [49, 127]:
+                            lp.Reset()
+                            lp.Close
+                            sys.exit()
+                        else:
+                            reset()
+                            caseAnime()
+                            break
+                    for x in range(4):
+                        for y in range(8):
+                            lp.LedCtrlXYByCode( 7-x, 8-y, 0 )
+                            lp.LedCtrlFlashXYByCode( 7-x, 8-y, 0 )
+                            lp.LedCtrlXYByCode( x, y+1, 0 )
+                            lp.LedCtrlFlashXYByCode( x, y+1, 0 )
+                            time.sleep(0.15)
+                    but = lp.ButtonStateRaw()
+                    if but != []:
+                        if but == [49, 127]:
+                            lp.Reset()
+                            lp.Close
+                            sys.exit()
+                        else:
+                            reset()
+                            caseAnime()
+                            break
+
             #Détécteur Case 1
             if but == [11,127] or but == [21,127] or but == [12,127] or but == [22,127]:
                 reset()
@@ -2573,17 +2616,13 @@ while 1:
 
             #Détécteur Case 2
             if but == [41,127] or but == [51,127] or but == [42,127] or but == [52,127]:
-                lp.LedCtrlRaw( 41 ,3 ,3 ,30)
-                lp.LedCtrlRaw( 51 ,3 ,3 ,30)
-                lp.LedCtrlRaw( 42 ,3 ,3 ,30)
-                lp.LedCtrlRaw( 52 ,3 ,3 ,30)
+                reset()
+                animeMulticolor()
 
             #Détécteur Case 3
             if but == [71, 127] or but == [81, 127] or but == [72, 127] or but == [82, 127]:
-                lp.LedCtrlRaw( 71 ,3 ,3 ,30)
-                lp.LedCtrlRaw( 81 ,3 ,3 ,30)
-                lp.LedCtrlRaw( 72 ,3 ,3 ,30)
-                lp.LedCtrlRaw( 82 ,3 ,3 ,30)
+                reset()
+                animeMulticolor()
 
             #Détécteur Case 4
             if but == [14,127] or but == [24,127] or but == [15,127] or but == [25,127]:
