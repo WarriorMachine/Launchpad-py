@@ -98,8 +98,12 @@ lp.LedCtrlRaw( 49, 30, 3, 2)
 #MUTE
 lp.LedCtrlRaw( 39 ,5 ,35 ,5)
 
+#Solo
+lp.LedCtrlRaw( 29 ,0 ,0 ,3)
+
 #RECORD ARM
 lp.LedCtrlRaw( 19, 63 ,32 ,10)
+
 
 while 1:
     but = lp.ButtonStateRaw()
@@ -2940,10 +2944,17 @@ while 1:
     #Détécteur de Case SOLO
     if but == [29, 127]:
         if SOLO == 1:
-            lp.LedCtrlRaw( 29 ,63 ,32 ,10)
+            lp.Reset()
+            lp.LedCtrlString( "OFF ", 3, 0, 0, -1 )
+            lp.LedCtrlRaw( 29 ,0 ,0 ,1)
             SOLO = SOLO-1
         elif SOLO == 0:
-            lp.LedCtrlRaw( 29 ,0 ,0 ,0)
+            lp.LedCtrlString( "ON ", 0, 3, 0, -1 )
+            resetHome()
+            lp.LedCtrlRaw( 29 ,0 ,0 ,3)
+            lp.LedCtrlRaw( 49, 30, 3, 2)
+            lp.LedCtrlRaw( 39 ,5 ,35 ,5)
+            lp.LedCtrlRaw( 19, 63 ,32 ,10)
             SOLO = SOLO+1
 
 lp.Reset()
