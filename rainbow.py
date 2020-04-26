@@ -48,7 +48,7 @@ def rainbow(gb):
             CR -= plus
         elif CB >= gb and CR < gb:
             CR += plus
-        time.sleep(0.01)
+            CG -= plus
         colorSquare(CR,CG,CB)
 
 while 1:
