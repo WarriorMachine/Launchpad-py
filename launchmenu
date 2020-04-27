@@ -1,7 +1,5 @@
 from threading import Thread
 import launchpad_py as launchpad
-import random
-import sys
 import time
 
 lp = launchpad.LaunchpadMk2()
