@@ -116,7 +116,7 @@ class launch(Thread):
                     self.colorBarMax(2, 0, 3, values["indicator"])
         else:
             values["flush"] = int(values["flush"])+1
-            if values["flush"] == 10000:
+            if values["flush"] == 100000:
                 lp.ButtonFlush()
                 values["flush"] = 1
 
