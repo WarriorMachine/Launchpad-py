@@ -25,10 +25,6 @@ values["flush"] = 1
 #ligne 7     :   21-28
 #ligne 8     :   11-18
 
-def base():
-    lp.LedCtrlRaw(105, 16, 0, 1)
-    lp.LedCtrlRaw(104, 0, 16, 6)
-    lp.LedCtrlRaw(19, 2, 0, 3)
 
 class launch(Thread):
     def __init__(self, arg):
@@ -44,19 +40,34 @@ class launch(Thread):
                         11,12,13,14,15,16,17,18]
         self.indicator = [19,29,39,49,59,69,79,89]
 
+    def base(self):
+        lp.LedCtrlRaw(105, 16, 0, 1)
+        lp.LedCtrlRaw(104, 0, 16, 6)
+        self.colorBarMax(2, 0, 3, values["indicator"])
+
+    def on(self):
+        self.base()
+        while values["stat"]:
+            self.rainbow(2*int(values["indicator"]))
+        self.off()
+
+    def off(self):
+        lp.Reset()
+        while not values["stat"]:
+            pass
+        self.on()
+
     def run(self):
         if self.arg == "1":
-            while values["stat"]:
-                self.rainbow(2*int(values["indicator"]))
+            if values["stat"]:
+                self.on()
         if self.arg == "2":
-            while values["stat"]:
+            while 1:
                 self.checker()
 
     def colorSquare(self, R, G, B):
         for p in self.square:
             lp.LedCtrlRaw(p, R, G, B)
-        if values["stat"] == False:
-            lp.Reset()
 
     def rainbow(self, gb):
         CR = gb
@@ -88,9 +99,8 @@ class launch(Thread):
         but = lp.ButtonStateRaw()
         if but != []:
             if but == [49, 127]:
-                values["stat"] = False
                 quit()
-            if but == [105, 127]:
+            elif but == [105, 127]:
                 if values["indicator"] == 1:
                     lp.LedCtrlRaw(105, 64, 32, 0)
                     time.sleep(0.25)
@@ -102,7 +112,7 @@ class launch(Thread):
                 else:
                     values["indicator"] = int(values["indicator"])-1
                     self.colorBarMin(0, 0, 0, values["indicator"])
-            if but == [104, 127]:
+            elif but == [104, 127]:
                 if values["indicator"] == 8:
                     lp.LedCtrlRaw(104, 64, 32, 0)
                     time.sleep(0.25)
@@ -114,13 +124,16 @@ class launch(Thread):
                 else:
                     values["indicator"] = int(values["indicator"])+1
                     self.colorBarMax(2, 0, 3, values["indicator"])
+            elif but == [111, 127]:
+                if values["stat"]:
+                    values["stat"] = False
+                else:
+                    values["stat"] = True
         else:
             values["flush"] = int(values["flush"])+1
             if values["flush"] == 100000:
                 lp.ButtonFlush()
                 values["flush"] = 1
-
-base()
 
 thread_1 = launch("1")
 thread_2 = launch("2")
