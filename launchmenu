@@ -23,7 +23,6 @@ values["flush"] = 1
 #ligne 7     :   21-28
 #ligne 8     :   11-18
 
-
 class launch(Thread):
     def __init__(self, arg):
         Thread.__init__(self)
