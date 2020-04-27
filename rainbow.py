@@ -45,7 +45,7 @@ class launch(Thread):
         CG = 0
         CB = gb
         plus = 1
-        for nm in range(1, gb**3):
+        for nm in range(1, gb*3):
             if CR >= gb and CG < gb:
                 CG += plus
                 CB -= plus
@@ -64,10 +64,10 @@ class launch(Thread):
         if but == [49, 127]:
             self.stop()
         if but == [19, 127]:
-            values["v"] = int(values["v"])/2
+            values["v"] = round(int(values["v"])/2)
             print(values["v"])
         if but == [29, 127]:
-            values["v"] = int(values["v"])*2
+            values["v"] = round(int(values["v"])*2)
             print(values["v"])
 
     def stop(self):
