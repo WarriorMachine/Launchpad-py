@@ -12,17 +12,6 @@ values["stat"] = True
 values["indicator"] = 1
 values["flush"] = 1
 
-#rond haut   :   104-111
-#rond droite :   89-79-69-59-49-39-29-19
-#ligne 1     :   81-88
-#ligne 2     :   71-78
-#ligne 3     :   61-68
-#ligne 4     :   51-58
-#ligne 5     :   41-48
-#ligne 6     :   31-38
-#ligne 7     :   21-28
-#ligne 8     :   11-18
-
 class launch(Thread):
     def __init__(self, arg):
         Thread.__init__(self)
@@ -55,10 +44,10 @@ class launch(Thread):
         self.on()
 
     def run(self):
-        if self.arg == "1":
+        if self.arg == "rainbow":
             if values["stat"]:
                 self.on()
-        if self.arg == "2":
+        if self.arg == "loop":
             while 1:
                 self.checker()
 
@@ -132,8 +121,8 @@ class launch(Thread):
                 lp.ButtonFlush()
                 values["flush"] = 1
 
-thread_1 = launch("1")
-thread_2 = launch("2")
+thread_1 = launch("rainbow")
+thread_2 = launch("loop")
 
 thread_1.start()
 thread_2.start()
