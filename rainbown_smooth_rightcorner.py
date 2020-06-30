@@ -112,7 +112,7 @@ class launch(Thread):
         CB = gb
         plus = values["%gradient"]
         self.masterTab = []
-        for nm in range(1, gb*3):
+        for nm in range(1, gb**3):
             if CR >= gb and CG < gb:
                 CG += plus
                 CB -= plus
